@@ -2,7 +2,11 @@ const logger = require('../../../utils/logger');
 const response = require('../../../utils/response');
 const { generateToken } = require('../../../utils/token');
 const User = require('../models/User');
+<<<<<<< HEAD
 const httpCodes = require('../../../constants/httpCodes');
+=======
+const { httpCodes } = require('../../../constants/httpCodes');
+>>>>>>> 49b649c ([UPDATE] permission name)
 
 module.exports = {
   login: async (req, res) => {
