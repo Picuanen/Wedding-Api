@@ -3,6 +3,7 @@ const router = express.Router();
 const controller = require('../controllers/auth.controller');
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const authMiddleware = require('../../../middlewares/auth.middleware');
 const grantAccess = require('../../../middlewares/permission.middleware');
 const permission = require('../../../constants/permissions');
@@ -16,10 +17,13 @@ router.get(
 );
 router.get('/logout', authMiddleware, controller.logout);
 =======
+=======
+>>>>>>> 49b649c ([UPDATE] permission name)
 
 router.post('/login', controller.login);
 router.post('/register', controller.register);
 router.get('/refresh-token', controller.refreshToken);
+<<<<<<< HEAD
 >>>>>>> 320f166 ([UPDATE] permission name)
 =======
 const authMiddleware = require('../../../middlewares/auth.middleware');
@@ -35,5 +39,7 @@ router.get(
 );
 router.get('/logout', authMiddleware, controller.logout);
 >>>>>>> 7eea433 ([UPDATE] middleware auth and permission)
+=======
+>>>>>>> 49b649c ([UPDATE] permission name)
 
 module.exports = router;
