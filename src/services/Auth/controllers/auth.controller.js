@@ -2,7 +2,7 @@ const logger = require('../../../utils/logger');
 const response = require('../../../utils/response');
 const { generateToken } = require('../../../utils/token');
 const User = require('../models/User');
-const { httpCodes } = require('../../../constants/httpCodes');
+const httpCodes = require('../../../constants/httpCodes');
 
 module.exports = {
   login: async (req, res) => {
@@ -32,13 +32,13 @@ module.exports = {
     }
   },
   register: async (req, res) => {
-    const { name, email, password } = req.body;
+    const { name, email, password, permissions } = req.body;
     try {
       const user = await User.findOne({ email });
       if (user) return response(res, httpCodes.BAD_REQUEST, 'User already exists', null);
 
       const passwordHased = await User.hashPassword(password);
-      const newUser = await User.create({ name, email, password: passwordHased });
+      const newUser = await User.create({ name, email, password: passwordHased, role: { name: 'user', permissions } });
 
       return response(res, httpCodes.OK, 'Register success', newUser);
     } catch (err) {
@@ -57,7 +57,20 @@ module.exports = {
       return response(res, httpCodes.OK, 'Refresh token success', { accessToken });
     } catch (error) {
       logger.error(error);
-      return response(res, httppCodes.INTERNAL_SERVER_ERROR, 'Refresh token failed', null);
+      return response(res, httpCodes.INTERNAL_SERVER_ERROR, 'Refresh token failed', null);
+    }
+  },
+  logout: async (req, res) => {
+    const { token } = req.cookies;
+    try {
+      const user = await User.findOne({ token });
+      if (!user) return response(res, httpCodes.UNAUTHORIZED, 'Invalid token', null);
+
+      await user.update({ token: null });
+      return response(res, httpCodes.OK, 'Logout success', null);
+    } catch (error) {
+      logger.error(error);
+      return response(res, httpCodes.INTERNAL_SERVER_ERROR, 'Logout failed', null);
     }
   },
 };
