@@ -4,7 +4,6 @@ module.exports = function (options) {
     try {
       const user = req.user;
       const { permission, role } = options;
-      //     const permissions = user.permissions;
       const isCan = user.role.permissions.find((item) => item === permission);
       if (!isCan) return response(res, httpCodes.UNAUTHORIZED, 'You do not have permission to access this page.');
       return next();
