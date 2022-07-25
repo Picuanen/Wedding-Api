@@ -5,7 +5,8 @@ module.exports = {
     ...require('./database/dbConfig'),
   },
   jwt: {
-    secret: process.env.JWT_SECRET || 'supersecret',
+    refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || 'refreshTokenSecret',
+    accessTokensecret: process.env.JWT_SECRET || 'accessTokensecret',
     algorithm: process.env.JWT_ALGO || 'HS256',
   },
 };
