@@ -8,4 +8,6 @@ router.use('/media', require('../services/Media/routes'));
 router.use('/components', require('../services/Components/routes'));
 router.use('/auth', require('../services/Auth/routes'));
 router.use('/media', require('../services/media/routes'));
+router.use('/', require('../services/Auth/routes'));
+router.use('/components', require('../services/Components/routes'));
 module.exports = router;
