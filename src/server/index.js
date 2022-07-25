@@ -4,7 +4,6 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const routes = require('../routes');
 const db = require('../config/database/intance');
-const fileUpload = require('express-fileupload');
 const app = express();
 const upload = require('../utils/upload');
 const path = require('path');
