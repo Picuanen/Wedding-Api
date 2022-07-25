@@ -1,4 +1,5 @@
 const { Router } = require('express');
 const router = Router();
-router.get('/', (req, res) => {});
+router.use('/', require('../services/Auth/routes'));
+router.use('/components', require('../services/Components/routes'));
 module.exports = router;
