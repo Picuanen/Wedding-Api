@@ -25,15 +25,17 @@ module.exports = {
   },
   update: async (req, res) => {
     try {
-      const layout = await Layout.findByIdAndUpdate(req.params.id, req.body);
+      const layout = await Layout.findByIdAndUpdate(req.params.id, req.body).populate('template').populate('events');
       response(res, httpCode.OK, 'Update layout success', layout);
     } catch (err) {
+      if (err.name == 'CastError') return response(res, httpCode.NOT_FOUND, 'Layout not found');
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
     }
   },
   destroy: async (req, res) => {
     try {
       const layout = await Layout.findByIdAndRemove(req.params.id);
+      if (!layout) return response(res, httpCode.NOT_FOUND, 'Layout not found');
       response(res, httpCode.OK, 'Delete layout success', layout);
     } catch (err) {
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
