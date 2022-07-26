@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 const { upload, getFile, deleteFile } = require('../../../utils/storage');
+=======
+const upload = require('../../../utils/upload');
+>>>>>>> e316fae ([Update] componenets)
 const Media = require('../models/media.model');
 const httpCode = require('../../../constants/httpCodes');
 const path = require('path');
@@ -17,10 +21,9 @@ module.exports = {
   store: async (req, res) => {
     try {
       await upload.single('media');
-      console.log(req.files);
       const media = await Media.create({
         title: req.body.title,
-        path: req.files[0].key,
+        path: req.files[0].path,
         category: req.files[0].mimetype.split('/')[0],
       });
       response(res, httpCode.OK, 'Create media success', media);
@@ -36,10 +39,14 @@ module.exports = {
   getImage: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
+<<<<<<< HEAD
       console.log(media.path);
       const file = await getFile(media.path);
       // res.json(file);
       file.pipe(res);
+=======
+      return res.sendFile(path.resolve(media.path));
+>>>>>>> e316fae ([Update] componenets)
     } catch (err) {
       if (err.name == 'CastError') return response(res, httpCode.NOT_FOUND, 'Media not found');
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
@@ -48,12 +55,19 @@ module.exports = {
   destroy: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
+<<<<<<< HEAD
       if (media.path) await deleteFile(media.path);
       await media.remove();
       response(res, httpCode.OK, 'Delete media success', media);
     } catch (err) {
       if (err.name == 'TypeError') return response(res, httpCode.NOT_FOUND, 'Media not found');
       console.log(err.name);
+=======
+      if (fs.existsSync(path.resolve(media.path))) fs.unlinkSync(media.path);
+      await media.remove();
+      response(res, httpCode.OK, 'Delete media success', media);
+    } catch (err) {
+>>>>>>> e316fae ([Update] componenets)
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
     }
   },
