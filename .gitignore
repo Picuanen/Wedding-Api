@@ -4,6 +4,7 @@ node_modules
 package-lock.json
 yarn.lock
 .DS_Store
+
 public/images/*
 public/videos/*
 public/txts/*
