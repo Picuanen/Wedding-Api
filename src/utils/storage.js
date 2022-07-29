@@ -9,7 +9,7 @@ const client = new S3Client({
 });
 const s3 = new AWS.S3({ credentials }); // Pass in opts to S3 if necessary
 
-const upload = (module.exports = {
+module.exports = {
   upload: multer({
     storage: multerS3({
       s3: client,
@@ -30,4 +30,4 @@ const upload = (module.exports = {
       if (err) console.log(err);
     });
   },
-});
+};
