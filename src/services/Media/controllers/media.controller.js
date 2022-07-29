@@ -23,6 +23,7 @@ module.exports = {
         path: req.files[0].key,
         category: req.files[0].mimetype.split('/')[0],
       });
+      //
       response(res, httpCode.OK, 'Create media success', media);
     } catch (err) {
       if (err.name == 'ValidationError') {
