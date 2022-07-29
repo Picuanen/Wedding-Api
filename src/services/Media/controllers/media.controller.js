@@ -1,4 +1,3 @@
-
 const { upload, getFile, deleteFile } = require('../../../utils/storage');
 
 const Media = require('../models/media.model');
@@ -22,7 +21,7 @@ module.exports = {
 
       const media = await Media.create({
         title: req.body.title,
-        path: req.files[0].path,
+        path: req.files[0].key,
         category: req.files[0].mimetype.split('/')[0],
       });
       //
@@ -44,7 +43,6 @@ module.exports = {
       const file = await getFile(media.path);
       // res.json(file);
       file.pipe(res);
-
     } catch (err) {
       if (err.name == 'CastError') return response(res, httpCode.NOT_FOUND, 'Media not found');
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
