@@ -17,8 +17,7 @@ module.exports = {
   },
   store: async (req, res) => {
     try {
-      await upload.single('media');
-
+      upload.single('media');
       const media = await Media.create({
         title: req.body.title,
         path: req.files[0].key,

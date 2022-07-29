@@ -1,4 +1,5 @@
 const express = require('express');
+const { upload } = require('../../../utils/storage');
 const router = express.Router();
 const controller = require('../controllers/media.controller');
 
