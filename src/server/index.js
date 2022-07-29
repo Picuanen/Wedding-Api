@@ -6,7 +6,7 @@ const routes = require('../routes');
 const db = require('../config/database/intance');
 const fileUpload = require('express-fileupload');
 const app = express();
-const upload = require('../utils/upload');
+const { upload } = require('../utils/storage');
 const path = require('path');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

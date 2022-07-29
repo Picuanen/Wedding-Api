@@ -1,4 +1,6 @@
-const upload = require('../../../utils/upload');
+
+const { upload, getFile, deleteFile } = require('../../../utils/storage');
+
 const Media = require('../models/media.model');
 const httpCode = require('../../../constants/httpCodes');
 const path = require('path');
@@ -17,6 +19,7 @@ module.exports = {
   store: async (req, res) => {
     try {
       await upload.single('media');
+
       const media = await Media.create({
         title: req.body.title,
         path: req.files[0].path,
@@ -35,7 +38,12 @@ module.exports = {
   getImage: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
-      return res.sendFile(path.resolve(media.path));
+
+      console.log(media.path);
+      const file = await getFile(media.path);
+      // res.json(file);
+      file.pipe(res);
+
     } catch (err) {
       if (err.name == 'CastError') return response(res, httpCode.NOT_FOUND, 'Media not found');
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
@@ -44,10 +52,14 @@ module.exports = {
   destroy: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
-      if (fs.existsSync(path.resolve(media.path))) fs.unlinkSync(media.path);
+
+      if (media.path) await deleteFile(media.path);
       await media.remove();
       response(res, httpCode.OK, 'Delete media success', media);
     } catch (err) {
+      if (err.name == 'TypeError') return response(res, httpCode.NOT_FOUND, 'Media not found');
+      console.log(err.name);
+
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
     }
   },
