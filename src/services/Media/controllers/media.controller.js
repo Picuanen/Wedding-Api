@@ -36,7 +36,7 @@ module.exports = {
   getImage: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
-      console.log(media.path);
+
       const file = await getFile(media.path);
       // res.json(file);
       file.pipe(res);
@@ -48,6 +48,7 @@ module.exports = {
   destroy: async (req, res) => {
     try {
       const media = await Media.findById(req.params.id);
+
       if (media.path) await deleteFile(media.path);
       await media.remove();
       response(res, httpCode.OK, 'Delete media success', media);
