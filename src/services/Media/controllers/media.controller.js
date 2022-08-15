@@ -1,5 +1,4 @@
 const { upload, getFile, deleteFile } = require('../../../utils/storage');
-
 const Media = require('../models/media.model');
 const httpCode = require('../../../constants/httpCodes');
 const path = require('path');
@@ -38,7 +37,6 @@ module.exports = {
     try {
       const media = await Media.findById(req.params.id);
 
-      console.log(media.path);
       const file = await getFile(media.path);
       // res.json(file);
       file.pipe(res);
@@ -57,7 +55,6 @@ module.exports = {
     } catch (err) {
       if (err.name == 'TypeError') return response(res, httpCode.NOT_FOUND, 'Media not found');
       console.log(err.name);
-
       response(res, httpCode.INTERNAL_SERVER_ERROR, err);
     }
   },
