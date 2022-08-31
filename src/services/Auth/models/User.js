@@ -26,7 +26,7 @@ const Schema = new mongoose.Schema({
     type: Object,
     default: {
       name: 'user',
-      permissions: [],
+      permissions: {},
     },
   },
   token: {
