@@ -8,13 +8,22 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const { upload } = require('../utils/storage');
 const path = require('path');
+const morgan = require('morgan');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    origin: '*',
+
+    methods: '*',
+    allowedHeaders: '*',
+  })
+);
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname)));
 // app.use(fileUpload());
+app.use(morgan('dev'));
 
 app.use(upload.any());
 db();
