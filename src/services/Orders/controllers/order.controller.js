@@ -14,6 +14,7 @@ module.exports = {
   payment: async (req, res) => {
     try {
       // const { card_number, card_exp_month, card_exp_year, card_cvv } = req.body;
+      console.log(req.token_id);
       const order = await Order.findById(req.params.id);
       const paymentData = await payment.creditCard({
         parameter: req.body,
